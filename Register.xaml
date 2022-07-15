@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="Register" Height="300" Width="300">
     <Grid>
-        
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label HorizontalAlignment="Center" Content="Username" FontSize="15"/>
+            <TextBox Width="150"/>
+            <Label HorizontalAlignment="Center" Content="Password" FontSize="15"/>
+            <TextBox Width="150"/>
+        </StackPanel>
     </Grid>
 </Window>
