@@ -15,8 +15,10 @@
         <Border Background="BlueViolet" Grid.Row="0"/>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Background="Violet" Width="200" Content="Login"/>
-            <Button Background="Violet" Margin="10,0" Width="200" Content="Register"/>
+            <Button Background="Violet" Width="200" Content="Login" Click="LoginButton"/>
+            <Button Background="Violet" Margin="10,0" Width="200" Content="Register" Click="RegisterButton"/>
         </StackPanel>
+        
+        
     </Grid>
 </Window>

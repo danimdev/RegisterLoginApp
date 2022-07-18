@@ -20,9 +20,27 @@ namespace RegisterLoginApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        Register registerWindow = new();
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Closed += CloseWindows;
+        }
+
+        private void CloseWindows(object? sender, EventArgs e)
+        {
+            registerWindow.Close();
+        }
+
+        private void RegisterButton(object sender, RoutedEventArgs e)
+        {
+            registerWindow.Show();
+        }
+
+        private void LoginButton(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

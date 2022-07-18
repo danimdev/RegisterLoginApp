@@ -10,14 +10,15 @@ namespace RegisterLoginApp
 {
     public class RegisterLoginManager
     {
+
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public bool EncryptToFile(string username,string password)
+        public bool RegisterAndWriteToFile(string username,string password)
         {
             var file = @"passwordFile.txt";
 
-            FileInfo fileToDecrypt = new FileInfo(file);
+            FileInfo fileToEncrypt = new(file);
 
             try
             {
@@ -26,7 +27,7 @@ namespace RegisterLoginApp
                     using (StreamWriter writeToFile = new StreamWriter(fileToWrite, Encoding.UTF8))
                     {
                         writeToFile.Write(password);
-                        fileToDecrypt.Encrypt();
+                        fileToEncrypt.Encrypt();
                         MessageBox.Show("Encrypted Successfully!");
                         return true;
                     }
@@ -40,7 +41,7 @@ namespace RegisterLoginApp
             return false;
         }
 
-        public bool CheckEncryptedPassword(string password)
+        public bool LoginAndReadFromFile(string password)
         {
             return false;
         }

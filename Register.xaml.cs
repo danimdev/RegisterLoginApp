@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 
 namespace RegisterLoginApp
 {
-    /// <summary>
-    /// Interaktionslogik für Register.xaml
-    /// </summary>
+    
     public partial class Register : Window
     {
+        RegisterLoginManager rlm = new();
+
         public Register()
         {
             InitializeComponent();
