@@ -18,16 +18,14 @@ namespace RegisterLoginApp
         {
             var file = @"passwordFile.txt";
 
-            FileInfo fileToEncrypt = new(file);
-
             try
             {
                 using (FileStream fileToWrite = new FileStream(file, FileMode.OpenOrCreate))
                 {
                     using (StreamWriter writeToFile = new StreamWriter(fileToWrite, Encoding.UTF8))
                     {
-                        writeToFile.Write(password);
-                        fileToEncrypt.Encrypt();
+                        writeToFile.WriteLine(username);
+                        writeToFile.WriteLine(password);
                         MessageBox.Show("Encrypted Successfully!");
                         return true;
                     }

@@ -23,5 +23,23 @@ namespace RegisterLoginApp
         {
             InitializeComponent();
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            ((MainWindow)System.Windows.Application.Current.MainWindow).registerWindow.Hide();
+        }
+
+        private void SubmitRegiserButton(object sender, RoutedEventArgs e)
+        {
+            if (!rlm.RegisterAndWriteToFile(UsernameTextbox.Text, PasswordBox.Password))
+            {
+                MessageBox.Show("Method didnt worked");
+            }
+            else
+            {
+                base.Hide();
+                MessageBox.Show("It worked");
+            }
+        }
     }
 }
