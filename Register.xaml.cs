@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,17 +28,21 @@ namespace RegisterLoginApp
             InitializeComponent();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            e.Cancel = true;
-            this.Hide();
-        }
+        //protected override void OnClosing(CancelEventArgs e)
+        //{
+        //    base.OnClosing(e);
+        //    e.Cancel = true;
+        //    this.Hide();
+        //}
 
         private void SubmitRegiserButton(object sender, RoutedEventArgs e)
         {
             try
             {
+                SHA512 hashPassword = SHA512.Create();
+
+                byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(PasswordBox.Password));
+
                 using(StreamWriter writePwToFile = new(file))
                 {
                     writePwToFile.WriteLine(PasswordBox.Password);

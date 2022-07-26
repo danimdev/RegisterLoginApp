@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,25 +21,30 @@ namespace RegisterLoginApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Register registerWindow = new Register();
+        public Register registerWindow;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Closed += CloseWindows;
-        }
-
-        private void CloseWindows(object? sender, EventArgs e)
-        {
-            registerWindow.Close();
         }
 
         private void RegisterButton(object sender, RoutedEventArgs e)
         {
-            if (registerWindow.IsActive)
-                return;
-            else
+            if(registerWindow == null)
+            {
+                registerWindow = new Register();
+                registerWindow.Closed += RegisterwindowClosed;
                 registerWindow.Show();
+            }
+            else
+            {
+                registerWindow.Activate();
+            }
+        }
+
+        private void RegisterwindowClosed(object? sender, EventArgs e)
+        {
+            registerWindow = null;
         }
 
         private void LoginButton(object sender, RoutedEventArgs e)
