@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,29 +20,35 @@ namespace RegisterLoginApp
     
     public partial class Register : Window
     {
-        RegisterLoginManager rlm = new();
+        string file = "data.enc";
 
         public Register()
         {
             InitializeComponent();
         }
 
-        protected override void OnClosed(EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            ((MainWindow)System.Windows.Application.Current.MainWindow).registerWindow.Hide();
+            base.OnClosing(e);
+            e.Cancel = true;
+            this.Hide();
         }
 
         private void SubmitRegiserButton(object sender, RoutedEventArgs e)
         {
-            if (!rlm.RegisterAndWriteToFile(UsernameTextbox.Text, PasswordBox.Password))
+            try
             {
-                MessageBox.Show("Method didnt worked");
+                using(StreamWriter writePwToFile = new(file))
+                {
+                    writePwToFile.WriteLine(PasswordBox.Password);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                base.Hide();
-                MessageBox.Show("It worked");
+                MessageBox.Show(ex.ToString());
             }
+
+            this.Hide();
         }
     }
 }
