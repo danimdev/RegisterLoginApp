@@ -39,13 +39,18 @@ namespace RegisterLoginApp
         {
             try
             {
+                string passwordString = PasswordBox.Password;
+
                 SHA512 hashPassword = SHA512.Create();
 
-                byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(PasswordBox.Password));
+                byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(passwordString));
 
                 using(StreamWriter writePwToFile = new(file))
                 {
-                    writePwToFile.WriteLine(PasswordBox.Password);
+                    for(int i= 0; i<hashedPassword.Length; i++)
+                    {
+                        writePwToFile.Write(hashedPassword.GetValue(i));
+                    }
                 }
             }
             catch (Exception ex)

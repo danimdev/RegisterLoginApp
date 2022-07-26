@@ -21,7 +21,8 @@ namespace RegisterLoginApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Register registerWindow;
+        public Register? registerWindow;
+        public Login? loginWindow;
 
         public MainWindow()
         {
@@ -49,7 +50,21 @@ namespace RegisterLoginApp
 
         private void LoginButton(object sender, RoutedEventArgs e)
         {
+            if (loginWindow == null)
+            {
+                loginWindow = new Login();
+                loginWindow.Closed += LoginWindowClosed; ;
+                loginWindow.Show();
+            }
+            else
+            {
+                loginWindow.Activate();
+            }
+        }
 
+        private void LoginWindowClosed(object? sender, EventArgs e)
+        {
+            loginWindow = null;
         }
     }
 }

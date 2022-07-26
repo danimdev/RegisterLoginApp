@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +24,32 @@ namespace RegisterLoginApp
         public Login()
         {
             InitializeComponent();
+        }
+
+        void SubmitAndCheckPassword(object sender, RoutedEventArgs e)
+        {
+            string passwordString = LoginPasswordBox.Password;
+
+            SHA512 hashPassword = SHA512.Create();
+
+            byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(passwordString));
+
+            using (StreamReader readPasswordFromFile = new("data.enc"))
+            {
+                string hashedPasswordFromFile = readPasswordFromFile.ReadLine();
+
+
+                string loginPasswordToCheck = "";
+                for (int i = 0; i < hashedPassword.Length; i++)
+                {
+                    loginPasswordToCheck += hashedPassword.GetValue(i).ToString();
+                }
+
+                if(string.Equals(loginPasswordToCheck,hashedPasswordFromFile))
+                {
+                    MessageBox.Show("Login Successfull");
+                }
+            }
         }
     }
 }
