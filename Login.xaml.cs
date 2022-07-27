@@ -49,6 +49,10 @@ namespace RegisterLoginApp
                 {
                     MessageBox.Show("Login Successfull");
                 }
+                else
+                {
+                    MessageBox.Show("Password is Wrong");
+                }
             }
         }
     }
