@@ -37,6 +37,40 @@ namespace RegisterLoginApp
 
         private void SubmitRegiserButton(object sender, RoutedEventArgs e)
         {
+            HashPasswordAndWriteToFile("data.enc");
+            HashUsernameAndWriteToFile("data.enc");
+
+            base.Close();
+        }
+
+        void HashUsernameAndWriteToFile(string fileName)
+        {
+            try
+            {
+                string usernameString = UsernameTextbox.Text;
+
+                SHA512 hashUsername = SHA512.Create();
+
+                byte[] hashedUsername = hashUsername.ComputeHash(Encoding.UTF8.GetBytes(usernameString));
+                
+                using(StreamWriter writeUsernameToFile = new(fileName,true))
+                {
+                    writeUsernameToFile.WriteLine("");
+                    
+                    for(int i = 0; i < hashedUsername.Length ; i++)
+                    {
+                        writeUsernameToFile.Write(hashedUsername.GetValue(i));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        void HashPasswordAndWriteToFile(string fileName)
+        {
             try
             {
                 string passwordString = PasswordBox.Password;
@@ -45,9 +79,9 @@ namespace RegisterLoginApp
 
                 byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(passwordString));
 
-                using(StreamWriter writePwToFile = new(file))
+                using (StreamWriter writePwToFile = new(file))
                 {
-                    for(int i= 0; i<hashedPassword.Length; i++)
+                    for (int i = 0; i < hashedPassword.Length; i++)
                     {
                         writePwToFile.Write(hashedPassword.GetValue(i));
                     }
@@ -57,8 +91,6 @@ namespace RegisterLoginApp
             {
                 MessageBox.Show(ex.ToString());
             }
-
-            this.Hide();
         }
     }
 }

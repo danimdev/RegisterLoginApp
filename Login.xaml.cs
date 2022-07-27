@@ -28,13 +28,19 @@ namespace RegisterLoginApp
 
         void SubmitAndCheckPassword(object sender, RoutedEventArgs e)
         {
+            HashLoginPasswordAndCheckForRightOne("data.enc");
+            base.Close();
+        }
+
+        void HashLoginPasswordAndCheckForRightOne(string fileName)
+        {
             string passwordString = LoginPasswordBox.Password;
 
             SHA512 hashPassword = SHA512.Create();
 
             byte[] hashedPassword = hashPassword.ComputeHash(Encoding.UTF8.GetBytes(passwordString));
 
-            using (StreamReader readPasswordFromFile = new("data.enc"))
+            using (StreamReader readPasswordFromFile = new(fileName))
             {
                 string hashedPasswordFromFile = readPasswordFromFile.ReadLine();
 
@@ -45,7 +51,7 @@ namespace RegisterLoginApp
                     loginPasswordToCheck += hashedPassword.GetValue(i).ToString();
                 }
 
-                if(string.Equals(loginPasswordToCheck,hashedPasswordFromFile))
+                if (string.Equals(loginPasswordToCheck, hashedPasswordFromFile))
                 {
                     MessageBox.Show("Login Successfull");
                 }

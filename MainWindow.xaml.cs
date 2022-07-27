@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace RegisterLoginApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public Register? registerWindow;
@@ -27,11 +26,16 @@ namespace RegisterLoginApp
         public MainWindow()
         {
             InitializeComponent();
+
+            if (File.Exists("data.enc"))
+            {
+                RegisterButtonVar.IsEnabled = false;
+            }
         }
 
         private void RegisterButton(object sender, RoutedEventArgs e)
         {
-            if(registerWindow == null)
+            if (registerWindow == null)
             {
                 registerWindow = new Register();
                 registerWindow.Closed += RegisterwindowClosed;
