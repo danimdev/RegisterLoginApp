@@ -39,10 +39,10 @@ namespace RegisterLoginApp
                 RegisterButtonVar.IsEnabled = false;
             }
 
-            InitializeTimer();
+            InitializeLoginTimer();
         }
 
-        void InitializeTimer()
+        void InitializeLoginTimer()
         {
             timer.Interval = TimeSpan.FromSeconds(0.1f);
             timer.Tick += Timer_Tick;
@@ -53,7 +53,7 @@ namespace RegisterLoginApp
         {
             if(loginSuccess == true)
             {
-                MainFrame.Background = Brushes.Blue;
+                MainFrame.Background = Brushes.Cyan;
                 timer.Stop();
                 LoginButtonVar.IsEnabled = false;
                 LoginStatus.Content = "Login Successfull!!";
