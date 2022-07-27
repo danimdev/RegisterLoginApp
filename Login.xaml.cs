@@ -28,11 +28,54 @@ namespace RegisterLoginApp
 
         void SubmitAndCheckPassword(object sender, RoutedEventArgs e)
         {
-            HashLoginPasswordAndCheckForRightOne("data.enc");
+            if(CheckLoginUsername("data.enc") && HashLoginPasswordAndCheckForRightOne("data.enc"))
+            {
+                MessageBox.Show("Login Successfull");
+            }
             base.Close();
         }
 
-        void HashLoginPasswordAndCheckForRightOne(string fileName)
+        bool CheckLoginUsername(string fileName)
+        {
+            try
+            {
+                string usernameString = LoginUsernameTextBox.Text;
+
+                SHA512 hashUsername = SHA512.Create();
+
+                byte[] hashedUsername = hashUsername.ComputeHash(Encoding.UTF8.GetBytes(usernameString));
+
+                using (StreamReader CheckForUsernameInFile = new(fileName))
+                {
+                    string HashedUsernameFromFile = File.ReadLines(fileName).Skip(1).Take(1).First();
+
+                    string loginUsernameToCheck = "";
+
+                    for (int i = 0; i< hashedUsername.Length; i++)
+                    {
+
+                        loginUsernameToCheck += hashedUsername.GetValue(i).ToString();
+                    }
+
+                    if(string.Equals(HashedUsernameFromFile,loginUsernameToCheck))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return false;
+        }
+
+        bool HashLoginPasswordAndCheckForRightOne(string fileName)
         {
             string passwordString = LoginPasswordBox.Password;
 
@@ -53,13 +96,15 @@ namespace RegisterLoginApp
 
                 if (string.Equals(loginPasswordToCheck, hashedPasswordFromFile))
                 {
-                    MessageBox.Show("Login Successfull");
+                    return true;
                 }
                 else
                 {
-                    MessageBox.Show("Password is Wrong");
+                    return false;
                 }
             }
+
+            return false;
         }
     }
 }

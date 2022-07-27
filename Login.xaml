@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label HorizontalAlignment="Center" Content="Username" FontSize="15"/>
-            <TextBox Width="150"/>
+            <TextBox x:Name="LoginUsernameTextBox" Width="150"/>
             <Label  HorizontalAlignment="Center" Content="Password" FontSize="15"/>
             <PasswordBox x:Name="LoginPasswordBox" Width="150"/>
             <Button Click="SubmitAndCheckPassword" Content="Submit"/>
