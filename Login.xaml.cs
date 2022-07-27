@@ -30,7 +30,7 @@ namespace RegisterLoginApp
         {
             if(CheckLoginUsername("data.enc") && HashLoginPasswordAndCheckForRightOne("data.enc"))
             {
-                MessageBox.Show("Login Successfull");
+                MainWindow.loginSuccess = true;
             }
             base.Close();
         }

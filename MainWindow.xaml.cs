@@ -14,14 +14,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace RegisterLoginApp
 {
 
     public partial class MainWindow : Window
     {
+
+        public static bool loginSuccess = false;
+
         public Register? registerWindow;
         public Login? loginWindow;
+
+        //timer
+        DispatcherTimer timer = new();
 
         public MainWindow()
         {
@@ -30,6 +37,26 @@ namespace RegisterLoginApp
             if (File.Exists("data.enc"))
             {
                 RegisterButtonVar.IsEnabled = false;
+            }
+
+            InitializeTimer();
+        }
+
+        void InitializeTimer()
+        {
+            timer.Interval = TimeSpan.FromSeconds(0.1f);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            if(loginSuccess == true)
+            {
+                MainFrame.Background = Brushes.Blue;
+                timer.Stop();
+                LoginButtonVar.IsEnabled = false;
+                LoginStatus.Content = "Login Successfull!!";
             }
         }
 
